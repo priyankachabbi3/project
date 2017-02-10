@@ -1,14 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CalanderApp</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <title>CalenderApp</title>
+  <%= stylesheet_link_tag    "application", :media => "all"%>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+<div>
+<div id="tabs1" >
+        <ul>
+        <% if user_signed_in? %>
+		  <li>Logged in as <strong><%= current_user.email %></strong></li>
+		  <li><%= link_to edit_user_registration_path  do %> <span>Edit profile</span><%end%></li> 
+		  <li><%= link_to destroy_user_session_path, method: :delete  do %> <span>Logout</span><%end%></li>
+		<% else %>
+		  <li><%= link_to new_user_registration_path, :class => 'navbar-link'  do %> <span>Sign up</span><%end%></li> 
+		  <li><%= link_to new_user_session_path, :class => 'navbar-link' do %> <span>Login</span><%end%></li>
+		<% end %>
+          <!-- <li><a href="/users/sign_in"><span>Sign In</span></a></li> -->
+        </ul>
+</div>
+<div>
+    <%if alert || notice%>
+    <p class="notice" style="color:red;width:500px;"><%= notice %></p>
+    <p class="alert" style="color:red;width:500px;"><%= alert %></p>
+    <%end%>
+</div>
+<div id="dvmainpanel">
+	<%= yield %>	
+</div>
+</div>
 </body>
 </html>
+<script>
+  $(function() {
+    $( ".datepicker" ).datepicker();
+  });
+  $(document).ready(function(){
+  $('.button_to #delete').on('click', function(e){
+   res = confirm(" Are you sure?")
+   if (res == false){
+    e.preventDefault();
+   }
+})
+})
+</script>
